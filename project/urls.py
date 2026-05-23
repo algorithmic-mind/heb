@@ -19,6 +19,9 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from blog.views import tinymce_upload_image,tinymce_delete_image
+from django.conf import settings
+from django.views.static import serve
+import re
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,4 +37,18 @@ urlpatterns = [
     path('page/', include('page.urls')),
     path('payment/', include('payment.urls')),
     path('account/', include('account.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] 
+# سرو فایل‌ها در حالت DEBUG
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+else:
+    # برای تست در محیط توسعه با DEBUG=False
+    urlpatterns += [
+        path('public/static/<path:path>', serve, {
+            'document_root': settings.STATIC_ROOT,
+        }),
+        path('public/media/<path:path>', serve, {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+    ]
