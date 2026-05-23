@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{site_settings.site_name}} - دوره ها {% endblock title %}
+
+{% block seo %}
+<meta name="title" content="{{site_settings.meta_tilte}}  ">
+<meta name="description" content="{{site_settings.meta_description}}">
+<meta name="keywords" content="{{site_settings.meta_keywords}}, آکادمی عبری ایران, آکادمی عبری, آموزش عبری">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="language" content="Persian">
+<meta name="revisit-after" content="7 days">
+{% endblock seo %}
+
+
+
+{% block main %}
+
+
+<main class="container mt-2 mb-5">
+
+  <!-- 🔍 فیلترهای جستجو -->
+  <div class="card rounded-4 p-3 mb-4 border-0 shadow-sm">
+    <div class="row g-2">
+      <div class="col-12 col-md-4">
+        <input type="text" class="form-control rounded-3" placeholder="جستجوی دوره..." />
+      </div>
+      <div class="col-12 col-md-4">
+        <select class="form-select rounded-3">
+          <option>همه سطوح</option>
+          <option>مقدماتی</option>
+          <option>متوسط</option>
+          <option>پیشرفته</option>
+        </select>
+      </div>
+      <div class="col-12 col-md-4">
+        <select class="form-select rounded-3">
+          <option>مرتب‌سازی بر اساس</option>
+          <option>جدیدترین</option>
+          <option>محبوب‌ترین</option>
+          <option>ارزان‌ترین</option>
+          <option>گران‌ترین</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+ 
+
+  <!-- 📚 لیست دوره‌ها -->
+  <div class="row g-4">
+
+    {% for c in courses %}
+    <!-- دوره 1 -->
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card rounded-4 border-0 shadow-sm h-100">
+        <img src="{% if c.thumbnail %}{{c.thumbnail.url}}{%endif%}" class="card-img-top rounded-top-4" alt="دوره مقدماتی" style="height: 300px; object-fit: cover;">
+        <div class="card-body">
+          <h6 class="fw-bold text-primary">{{c.title}}</h6>
+          <p class="text-muted small">{{c.short_description|safe}}</p>
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <span class="badge bg-light text-dark border">{{c.level}}</span>
+            <span class="fw-bold text-primary">{{c.price}} تومان</span>
+          </div>
+        </div>
+        <div class="card-footer bg-white border-0 pt-0">
+          <a href="{% url 'course:course_detail' slug=c.slug %}" class="btn btn-sm btn-primary w-100 rounded-3">مشاهده دوره</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+    
+
+   
+
+  </div>
+
+  <!-- 🔍 اگر نتیجه‌ای نبود -->
+  <!-- <div class="text-center mt-5 text-muted">
+    <p>دوره‌ای با این معیارها یافت نشد.</p>
+  </div> -->
+
+
+</main>
+
+
+{% endblock main %}

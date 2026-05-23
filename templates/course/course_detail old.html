@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}{{site_settings.site_name}} - {{course.title}} {% endblock title %}
+
+{% block seo %}
+<meta name="title" content="{{course.title}}">
+<meta name="description" content="{{course.description}}">
+<meta name="keywords" content="{{site_settings.meta_keywords}}, آکادمی عبری ایران, آکادمی عبری, آموزش عبری">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="language" content="Persian">
+<meta name="revisit-after" content="7 days">
+
+{% endblock seo %}
+
+
+
+{% block main %}
+
+
+<main class="container mt-2 mb-5">
+
+  <!-- 🖼️ تصویر بزرگ دوره -->
+  <div class="course-hero mb-4" style="background-image: url('{{course.banner.url}}');"></div>
+
+  <!-- عنوان و اطلاعات دوره -->
+  <div class="card rounded-4 p-4 border-0 shadow-sm mb-4">
+    <h4 class="fw-bold text-primary">{{course.title}}</h4>
+    <p class="text-muted mt-2">
+      {{course.short_description|safe}}
+    </p>
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center mt-3">
+      <div>
+        <span class="badge bg-light text-dark border me-2">سطح: {{course.level}}</span>
+        <span class="badge bg-light text-dark border me-2">تعداد جلسات: 20</span>
+        <span class="badge bg-light text-dark border">مدت کل: 15 ساعت</span>
+      </div>
+      <div class="text-end">
+        <div class="price-section mb-3">
+                                {% if course.discount_percent > 0 %}
+                                    <h4 class="text-success">
+                                        {{ course.get_final_price|floatformat:0|intcomma }} تومان
+                                    </h4>
+                                    <p class="text-muted">
+                                        <strike>{{ course.price|floatformat:0|intcomma }} تومان</strike>
+                                        <span class="badge badge-danger">{{ course.discount_percent }}% تخفیف</span>
+                                    </p>
+                                {% else %}
+                                    <h4 class="text-primary">{{ course.price|floatformat:0|intcomma }} تومان</h4>
+                                {% endif %}
+                            </div>
+      </div>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="d-flex gap-2 flex-column flex-md-row">
+      
+       <!-- دکمه خرید -->
+                        {% if user.is_authenticated %}
+                            {% if course.has_user_enrolled %}
+                                <div class="alert alert-success">
+                                    <i class="fas fa-check-circle"></i>
+                                    شما در این دوره ثبت‌نام کرده‌اید
+                                </div>
+                                <a href="{% url 'courses:course_content' slug=course.slug %}" class="btn btn-primary btn-block">
+                                    مشاهده دوره
+                                </a>
+                            {% else %}
+                                {% if course.is_free %}
+                                    <form method="post" action="{% url 'courses:free_enrollment' course.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-success btn-block btn-lg">
+                                            <i class="fas fa-play"></i>
+                                            شروع دوره رایگان
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <a href="{% url 'payment:payment_request' course.id %}" class="btn btn-primary btn-block btn-lg">
+                                        <i class="fas fa-shopping-cart"></i>
+                                        خرید دوره
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            <div class="alert alert-info">
+                                برای خرید این دوره ابتدا وارد حساب کاربری خود شوید
+                            </div>
+                            <a href="{% url 'account:login' %}" class="btn btn-outline-primary btn-block">
+                                ورود به حساب کاربری
+                            </a>
+                        {% endif %}
+      <button class="btn btn-outline-primary btn-lg flex-fill rounded-3 d-flex align-items-center justify-content-center">
+        <i class="bi bi-heart me-2"></i> افزودن به علاقه‌مندی‌ها
+      </button>
+    </div>
+  </div>
+
+  <!-- تب‌های اطلاعات -->
+  <div class="card rounded-4 p-4 border-0 shadow-sm">
+    <ul class="nav nav-tabs mb-4" id="courseTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab">
+          توضیحات دوره
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="syllabus-tab" data-bs-toggle="tab" data-bs-target="#syllabus" type="button" role="tab">
+          سرفصل‌ها
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab">
+          نظرات دانشجویان
+        </button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="courseTabsContent">
+      <!-- تب توضیحات -->
+      <div class="tab-pane fade show active" id="description" role="tabpanel">
+        <p>
+        {{course.description|safe}}
+        </p>
+       
+        <ul class="list-unstyled mt-3">
+          <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i> آموزش الفبا و تلفظ صحیح</li>
+          <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i> گرامر ساده و کاربردی</li>
+          <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i> تمرینات تعاملی و پیشنهادات هوش مصنوعی</li>
+          <li><i class="bi bi-check-circle-fill text-primary me-2"></i> پشتیبانی تا پایان دوره</li>
+        </ul>
+      </div>
+
+      <!-- تب سرفصل‌ها -->
+      <div class="tab-pane fade" id="syllabus" role="tabpanel">
+        <div class="lesson-item">
+          <h6 class="mb-1">جلسه ۱: آشنایی با الفبای عبری</h6>
+          <p class="text-muted small mb-1">یادگیری 22 حرف اصلی و تلفظ آنها</p>
+          <span class="duration">مدت: 45 دقیقه</span>
+        </div>
+
+        <div class="lesson-item">
+          <h6 class="mb-1">جلسه ۲: تلفظ پیشرفته و نیقود</h6>
+          <p class="text-muted small mb-1">آموزش نیقود و تأثیر آن بر تلفظ</p>
+          <span class="duration">مدت: 50 دقیقه</span>
+        </div>
+
+        <div class="lesson-item">
+          <h6 class="mb-1">جلسه ۳: ساختار جمله ساده</h6>
+          <p class="text-muted small mb-1">افعال، فاعل و مفعول در جمله عبری</p>
+          <span class="duration">مدت: 60 دقیقه</span>
+        </div>
+
+        <div class="lesson-item">
+          <h6 class="mb-1">جلسه ۴: اعداد و زمان</h6>
+          <p class="text-muted small mb-1">شمردن، ساعت و تاریخ در عبری</p>
+          <span class="duration">مدت: 55 دقیقه</span>
+        </div>
+
+        <div class="lesson-item">
+          <h6 class="mb-1">جلسه ۵: مکالمه روزمره</h6>
+          <p class="text-muted small mb-1">جملات پرکاربرد در زندگی روزمره</p>
+          <span class="duration">مدت: 60 دقیقه</span>
+        </div>
+      </div>
+
+      <!-- تب نظرات -->
+      <div class="tab-pane fade" id="reviews" role="tabpanel">
+        <div class="border-bottom pb-3 mb-3">
+          <div class="d-flex justify-content-between">
+            <h6 class="mb-0">محمد حسینی</h6>
+            <div class="text-warning">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-half"></i>
+            </div>
+          </div>
+          <p class="text-muted small mt-1 mb-0">دوره عالی بود، مخصوصاً بخش تلفظ که خیلی دقیق توضیح داده شده بود.</p>
+        </div>
+
+        <div class="border-bottom pb-3 mb-3">
+          <div class="d-flex justify-content-between">
+            <h6 class="mb-0">فاطمه اکبری</h6>
+            <div class="text-warning">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+            </div>
+          </div>
+          <p class="text-muted small mt-1 mb-0">مربی بسیار صبور و حرفه‌ای بود. پشتیبانی هم عالی بود.</p>
+        </div>
+
+        <div class="text-center mt-3">
+          <button class="btn btn-outline-primary btn-sm rounded-3">ثبت نظر جدید</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+</main>
+
+{% endblock main %}

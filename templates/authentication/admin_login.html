@@ -1,0 +1,46 @@
+{% extends 'authentication/base.html' %}
+{% load static %}
+{% block main %}
+
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card login-card p-4 bg-white">
+      <div class="text-center mb-4">
+        <a href="{% url 'main:landing' %}"><img src="{% static '/main/images/virchat-512.png' %}" alt="ویرچت" class="rounded-circle shadow" width="80"></a>
+        <h5 class="mt-3 fw-bold">ورود به مدیریت ویرچت  </h5>
+
+        
+       
+      </div>
+
+      <form id="login-form"
+      method="post"
+      hx-post="{% url 'authentication:admin_login' %}" 
+      hx-target="#login-messages" 
+      hx-swap="innerHTML"
+      >
+      {% csrf_token %}
+    
+    <div class="mb-3">
+        <label for="username" class="form-label">نام کاربری</label>
+       
+        <input type="tel" class="form-control rounded-4" id="username" name="username" required autocomplete="off">
+       
+    </div>
+
+    <div class="mb-3">
+        <label for="password" class="form-label">گذرواژه</label>
+        <input type="password" class="form-control rounded-4" id="password" name="password" required au autocomplete="off" dir="ltr">
+    </div>
+
+    <button type="submit" class="btn btn-purple rounded-4 w-100 mb-3">ورود</button>
+
+    
+    <div id="login-messages"></div>
+</form>
+
+
+      
+
+    </div>
+  </div>
+{% endblock main %}

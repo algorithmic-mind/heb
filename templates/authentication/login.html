@@ -1,0 +1,42 @@
+{% extends 'authentication/base.html' %}
+{% load static %}
+{% block main %}
+
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card login-card p-4 bg-white">
+      <div class="text-center mb-4">
+        
+        <h5 class="mt-3 fw-bold">ورود به آکادمی عبری ایران  </h5>
+
+        
+       
+      </div>
+
+      <form id="login-form"  class="needs-validation" novalidate  method="post"
+      hx-post="{% url 'account:login' %}" 
+      hx-target="#login-messages" 
+      hx-swap="innerHTML">
+        <div class="mb-3">
+          <label for="mobile" class="form-label">شماره موبایل</label>
+          {% csrf_token %}
+          <input type="tel" class="form-control rounded-4" id="mobile" name="phone" placeholder="09123456789" required oninput="convertNumbersInstant(this)" autocomplete="off">
+          <div class="invalid-feedback">
+    شماره موبایل باید با 09 شروع و 11 رقم باشد.
+  </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary rounded-4 w-100 mb-3">ارسال کد تایید</button>
+        <div class="text-center">
+        <small class="text-muted">ورود شما به منزله پذیرش <a href="#" target="_blank" class="me-1 ms-1 text-purple" style="text-decoration: none;">قوانین و مقررات</a> است.</small>
+        </div>
+
+        <div id="login-messages" class="mt-2"></div>
+
+
+      </form>
+
+
+    </div>
+  </div>
+  <script src="{% static '/authentication/js/login.js' %}"></script>
+{% endblock main %}

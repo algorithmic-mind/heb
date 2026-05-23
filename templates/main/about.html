@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{site_settings.site_name}} - وبلاگ {% endblock title %}
+
+{% block seo %}
+
+
+{% endblock seo %}
+
+
+
+{% block main %}
+
+<main class="container mt-2 mb-5">
+
+  <!-- 🏁 بخش معرفی -->
+  <section class="hero-about mb-5">
+    <h2 class="fw-bold mb-3">سلام، ما آکادمی عبری ایران هستیم</h2>
+    <p class="mb-4 lead">
+      ما با افتخار اولین آکادمی تخصصی آموزش زبان عبری به فارسی‌زبانان در ایران هستیم.
+      مأموریت ما، ایجاد پلی فرهنگی و آموزشی بین ایران و زبان عبری است.
+    </p>
+    
+  </section>
+
+  <!-- 🎯 مأموریت و چشم‌انداز -->
+  <section class="mb-5">
+    <div class="row g-4">
+      <div class="col-12 col-lg-6">
+        <div class="p-4 bg-white rounded-4 shadow-sm h-100">
+          <h4 class="fw-bold text-primary mb-3"><i class="bi bi-rocket text-primary"></i> مأموریت ما</h4>
+          <p>
+            ایجاد دسترسی آسان، اصولی و جذاب به زبان و فرهنگ عبری برای دانشجویان، محققان و علاقه‌مندان ایرانی.
+            ما باور داریم که یادگیری زبان، دریچه‌ای به سوی فهم بهتر تاریخ، دین و فرهنگ است.
+          </p>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="p-4 bg-white rounded-4 shadow-sm h-100">
+          <h4 class="fw-bold text-primary mb-3"><i class="bi bi-binoculars text-primary"></i> چشم‌انداز ما</h4>
+          <p>
+            تبدیل شدن به مرکز مرجع آموزش زبان عبری در غرب آسیا، با استفاده از فناوری‌های نوین، هوش مصنوعی و
+            محتوای فارسی‌سازی شده با کیفیت بالا.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 📊 آمار و دستاوردها -->
+  <section class="mb-5">
+    <h4 class="fw-bold text-center text-muted mb-4">دستاوردهای ما</h4>
+    <div class="row g-4">
+      <div class="col-6 col-md-3">
+        <div class="stat-item">
+          <div class="number">2000+</div>
+          <div class="label">دانشجوی فعال</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-item">
+          <div class="number">10</div>
+          <div class="label">دوره آموزشی</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-item">
+          <div class="number">400+</div>
+          <div class="label">ساعت آموزش</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-item">
+          <div class="number">100</div>
+          <div class="label">مقاله رایگان</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 💡 ارزش‌های آموزشی -->
+  <section class="mb-5">
+    <h4 class="fw-bold text-center text-muted mb-4">ارزش‌های ما</h4>
+    <div class="bg-white p-4 rounded-4 shadow-sm">
+      <div class="value-item">
+        <i class="bi bi-people value-icon"></i>
+        <div class="value-text">
+          <h5>یادگیری فعال و تعاملی</h5>
+          <p>ما به جای حفظ و نوشتن، بر درک، تمرین و استفاده عملی زبان تأکید داریم.</p>
+        </div>
+      </div>
+      <div class="value-item">
+        <i class="bi bi-shield-check value-icon"></i>
+        <div class="value-text">
+          <h5>اعتماد و شفافیت</h5>
+          <p>تمام دوره‌ها با مشخصات دقیق، قیمت شفاف و پشتیبانی تا پایان ارائه می‌شوند.</p>
+        </div>
+      </div>
+      <div class="value-item">
+        <i class="bi bi-lightbulb value-icon"></i>
+        <div class="value-text">
+          <h5>نوآوری در آموزش</h5>
+          <p>استفاده از هوش مصنوعی، مترجم هوشمند و تمرینات تعاملی برای یادگیری بهتر.</p>
+        </div>
+      </div>
+      <div class="value-item">
+        <i class="bi bi-globe value-icon"></i>
+        <div class="value-text">
+          <h5>احترام به فرهنگ</h5>
+          <p>ما زبان عبری را بدون تعصب و با احترام به همه فرهنگ‌ها آموزش می‌دهیم.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 👥 تیم آموزشی -->
+  <section class="mb-5">
+    <h4 class="fw-bold text-center text-muted mb-4">تیم آموزشی ما</h4>
+    <div class="row g-4">
+      <!-- عضو ۱ -->
+      <div class="col-12 col-md-6 col-lg-3 mx-auto justify-content-center">
+        <div class="team-member text-center justify-content-center mx-auto align-items-center">
+          <img src="images/profile.jpeg" alt="دکتر سارا لطفی" class="rounded-circle text-center">
+          <div class="info text-center">
+            <div class="name">دکتر سارا لطفی</div>
+            <div class="role">متخصص زبان و گرامر عبری</div>
+          </div>
+        </div>
+      </div>
+      <!-- عضو ۲ -->
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="team-member text-center">
+          <img src="images/profile.jpeg" alt="استاد رضا محمدی" class="rounded-circle text-center">
+          <div class="info text-center">
+            <div class="name">استاد رضا محمدی</div>
+            <div class="role">مدرس متون توراتی و دینی</div>
+          </div>
+        </div>
+      </div>
+      <!-- عضو ۳ -->
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="team-member">
+          <img src="images/profile.jpeg" alt="میثم احمدی" class="rounded-circle text-center">
+          <div class="info text-center">
+            <div class="name">میثم احمدی</div>
+            <div class="role">توسعه‌دهنده محتوا  </div>
+          </div>
+        </div>
+      </div>
+      <!-- عضو ۴ -->
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="team-member">
+          <img src="images/profile.jpeg" alt="نگین کریمی" class="rounded-circle text-center">
+          <div class="info text-center">
+            <div class="name">نگین کریمی</div>
+            <div class="role">مربی مکالمه و تلفظ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🤝 همکاران ما -->
+  <section class="mb-5">
+    <h4 class="fw-bold text-center text-muted mb-4">همکاران و شرکای آموزشی</h4>
+    <div class="swiper logo-swiper mt-3">
+      <div class="swiper-wrapper align-items-center">
+        <div class="swiper-slide"><img src="images/partner.png" class="img-fluid" style="max-height: 80px;" alt="همکار ۱"></div>
+        <div class="swiper-slide"><img src="images/partner2.png" class="img-fluid" style="max-height: 80px;" alt="همکار ۲"></div>
+        <div class="swiper-slide"><img src="images/partner3.png" class="img-fluid" style="max-height: 80px;" alt="همکار ۳"></div>
+        <div class="swiper-slide"><img src="images/partner4.png" class="img-fluid" style="max-height: 80px;" alt="همکار ۴"></div>
+        <div class="swiper-slide"><img src="images/partner.png" class="img-fluid" style="max-height: 80px;" alt="همکار ۵"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 📞 تماس سریع (اختیاری) -->
+  <section class="bg-white p-4 rounded-4 shadow-sm mb-5">
+    <h5 class="fw-bold text-primary mb-3">سوالی دارید؟</h5>
+    <p class="text-muted mb-4">تیم پشتیبانی ما آماده پاسخگویی به شماست.</p>
+    <form>
+      <div class="row g-3">
+        <div class="col-12 col-md-6">
+          <input type="text" class="form-control rounded-3" placeholder="نام و نام خانوادگی">
+        </div>
+        <div class="col-12 col-md-6">
+          <input type="email" class="form-control rounded-3" placeholder="ایمیل">
+        </div>
+        <div class="col-12">
+          <textarea class="form-control rounded-3" rows="4" placeholder="پیام شما"></textarea>
+        </div>
+        <div class="col-12 text-end">
+          <button class="btn btn-primary rounded-3 px-4">ارسال پیام</button>
+        </div>
+      </div>
+    </form>
+  </section>
+
+</main>
+
+{% endblock main %}

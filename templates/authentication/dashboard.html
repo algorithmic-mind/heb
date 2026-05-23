@@ -1,0 +1,337 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{site_settings.site_name}} - حساب کاربری {% endblock title %}
+
+{% block seo %}
+
+
+{% endblock seo %}
+
+
+
+{% block main %}
+<main class="container mt-2 mb-5">
+<div class="dashboard-container">
+    <!-- هدر داشبورد -->
+    <div class="dashboard-header bg-primary text-white p-4 rounded-4 mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="h3 mb-1">داشبورد کاربری</h1>
+                <p class="mb-0">به پنل کاربری خود خوش آمدید</p>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <span class="badge bg-light text-dark">
+                    <i class="bi bi-person-circle me-1"></i>
+                    کاربر عادی
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- سایدبار -->
+        <div class="col-lg-3 mb-4 ">
+            <div class="card rounded-4">
+                <div class="card-body text-center">
+                    <div class="avatar-placeholder mb-3">
+                        <i class="bi bi-person-circle" style="font-size: 4rem; color: #6c757d;"></i>
+                    </div>
+                    <h5 class="card-title" id="user-fullname">
+                        {% if request.user.first_name%}
+                            {{request.user.first_name}} {{request.user.last_name}}
+
+                        {% endif %}
+                    </h5>
+                    <p class="text-muted">کاربر سایت</p>
+                    
+                    <!-- فرم تغییر نام -->
+                    <div class="change-name-form mt-4">
+                        <button class="btn btn-outline-primary btn-sm w-100 mb-3 rounded-4" data-bs-toggle="modal" data-bs-target="#changeNameModal">
+                            <i class="bi bi-pencil me-1"></i>
+                                تغییر اطلاعات
+                        </button>
+
+                        <a class="btn btn-outline-danger btn-sm w-100 mb-3 rounded-4" href="{% url 'account:logout' %}">
+                          
+                              خروج
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- کارت آمار سریع -->
+            <div class="card mt-3 rounded-4">
+                <div class="card-body">
+                    <h6 class="card-title">آمار کلی</h6>
+                    <div class="stats-list">
+                        <div class="d-flex justify-content-between py-2 border-bottom">
+                            <span>دوره‌های خریداری شده:</span>
+                            <span class="fw-bold">۵ دوره</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-2 border-bottom">
+                            <span>تعداد پرداخت‌ها:</span>
+                            <span class="fw-bold">۳ تراکنش</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-2">
+                            <span>تعداد نظرات:</span>
+                            <span class="fw-bold">۲ نظر</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- محتوای اصلی -->
+        <div class="col-lg-9">
+            <!-- دوره‌های شرکت کرده -->
+            <div class="card mb-4 ">
+                <div class="card-header bg-light">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-book me-2"></i>
+                        دوره‌های شرکت کرده
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>عنوان دوره</th>
+                                    <th>تاریخ شروع</th>
+                                    <th>وضعیت</th>
+                                    <th>پیشرفت</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>آموزش مقدماتی عبری</td>
+                                    <td>۱۴۰۲/۱۰/۱۵</td>
+                                    <td><span class="badge bg-success">فعال</span></td>
+                                    <td>
+                                        <div class="progress" style="height: 8px;">
+                                            <div class="progress-bar" style="width: 75%"></div>
+                                        </div>
+                                        <small>۷۵٪</small>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            ادامه یادگیری
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>گرامر پیشرفته عبری</td>
+                                    <td>۱۴۰۲/۰۹/۰۱</td>
+                                    <td><span class="badge bg-warning text-dark">در حال برگزاری</span></td>
+                                    <td>
+                                        <div class="progress" style="height: 8px;">
+                                            <div class="progress-bar" style="width: 40%"></div>
+                                        </div>
+                                        <small>۴۰٪</small>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            ادامه یادگیری
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>مکالمه روزمره عبری</td>
+                                    <td>۱۴۰۲/۰۸/۱۰</td>
+                                    <td><span class="badge bg-success">تکمیل شده</span></td>
+                                    <td>
+                                        <div class="progress" style="height: 8px;">
+                                            <div class="progress-bar" style="width: 100%"></div>
+                                        </div>
+                                        <small>۱۰۰٪</small>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-secondary">
+                                            مشاهده گواهی
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- لیست پرداخت‌ها -->
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-credit-card me-2"></i>
+                        تاریخچه پرداخت‌ها
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>شماره تراکنش</th>
+                                    <th>مبلغ</th>
+                                    <th>تاریخ</th>
+                                    <th>وضعیت</th>
+                                    <th>دوره</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>TRX-۱۲۳۴۵۶</td>
+                                    <td>۲۹۹,۰۰۰ تومان</td>
+                                    <td>۱۴۰۲/۱۰/۱۵</td>
+                                    <td><span class="badge bg-success">موفق</span></td>
+                                    <td>آموزش مقدماتی عبری</td>
+                                </tr>
+                                <tr>
+                                    <td>TRX-۷۸۹۰۱۲</td>
+                                    <td>۱۹۹,۰۰۰ تومان</td>
+                                    <td>۱۴۰۲/۰۹/۰۱</td>
+                                    <td><span class="badge bg-success">موفق</span></td>
+                                    <td>گرامر پیشرفته عبری</td>
+                                </tr>
+                                <tr>
+                                    <td>TRX-۳۴۵۶۷۸</td>
+                                    <td>۱۵۰,۰۰۰ تومان</td>
+                                    <td>۱۴۰۲/۰۸/۱۰</td>
+                                    <td><span class="badge bg-danger">ناموفق</span></td>
+                                    <td>مکالمه روزمره عبری</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- نظرات کاربر -->
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-chat-dots me-2"></i>
+                        نظرات من
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="comments-list">
+                        <div class="comment-item border-bottom pb-3 mb-3">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <h6 class="mb-1">آموزش مقدماتی عبری</h6>
+                                <small class="text-muted">۱۴۰۲/۱۰/۱۶</small>
+                            </div>
+                            <p class="mb-1">دوره بسیار عالی و کاربردی بود. استاد به خوبی مطالب رو توضیح دادن.</p>
+                            <div class="rating">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star text-warning"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="comment-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <h6 class="mb-1">گرامر پیشرفته عبری</h6>
+                                <small class="text-muted">۱۴۰۲/۰۹/۰۵</small>
+                            </div>
+                            <p class="mb-1">مطالب کمی پیچیده بود ولی با تمرین می‌شه تسلط پیدا کرد.</p>
+                            <div class="rating">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-half text-warning"></i>
+                                <i class="bi bi-star text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- مودال تغییر نام و نام خانوادگی -->
+<div class="modal fade" id="changeNameModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">تغییر نام و نام خانوادگی</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="changeNameForm"
+             
+                hx-post="{% url 'account:change_information' %}" 
+                hx-target="#messages" 
+                hx-swap="innerHTML"
+                >
+                {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="firstName" class="form-label">نام</label>
+                        <input type="text" class="form-control" id="firstName" name="firstName" required value="{{request.user.first_name}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="lastName" class="form-label">نام خانوادگی</label>
+                        <input type="text" class="form-control" id="lastName" name="lastName" required>
+                    </div>
+                    <div id="messages"></div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
+                <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<style>
+
+
+.avatar-placeholder {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    border-radius: 50%;
+}
+
+.progress {
+    width: 100px;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.rating {
+    color: #ffc107;
+}
+
+.comment-item {
+    padding: 10px 0;
+}
+
+.stats-list {
+    font-size: 0.9rem;
+}
+
+.table th {
+    border-top: none;
+    font-weight: 600;
+    color: #6c757d;
+}
+</style>
+
+</main>
+
+<script src="{% static '/js/htmx-2-0-6.min.js' %}"></script>
+
+{% endblock main %}

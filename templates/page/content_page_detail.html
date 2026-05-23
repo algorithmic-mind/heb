@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block seo %}
+    {{ block.super }}
+    <title>{{ page.meta_title }}</title>
+    <meta name="description" content="{{ page.meta_description }}">
+    <meta name="keywords" content="{{page.meta_keywords}}">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ page.get_meta_title }}">
+    <meta property="og:description" content="{{ page.get_meta_description }}">
+    {% if page.featured_image %}
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ page.featured_image.url }}">
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+<div class="container">
+
+     <section class="hero-about mb-5">
+    <h1>{{ page.title }}</h1>
+    
+    
+  </section>
+
+<article class="content-page">
+    <header class="page-header text-center">
+       
+        {% if page.featured_image %}
+        <img src="{{ page.featured_image.url }}" alt="{{ page.image_alt }}" class="featured-image img-fluid">
+        {% endif %}
+    </header>
+    
+    <div class="page-content">
+        {{ page.content|safe }}
+    </div>
+</article>
+</div>
+{% endblock %}

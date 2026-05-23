@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}{{site_settings.site_name}} - {{site_settings.site_solgan}} {% endblock title %}
+
+{% block seo %}
+<meta name="title" content="{{site_settings.meta_title}}">
+<meta name="description" content="{{site_settings.meta_description}}">
+<meta name="keywords" content="{{site_settings.meta_keywords}}">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="language" content="Persian">
+<meta name="revisit-after" content="7 days">
+{% endblock seo %}
+
+
+
+{% block main %}
+
+
+
+<main class="container mt-2 mb-5">
+<!-- اسلایدر اصلی -->
+<div class="carousel-wrapper mb-3">
+  <div id="mainSlider" class="carousel slide rounded-5" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      {% for s in sliders %}
+        <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
+          <a href="{{ s.link }}" target="_blank">
+            <img src="{{ s.image.url }}" class="d-block w-100" alt="{{ s.alt_text }}">
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+<!-- Summeries section -->
+<div class="container mt-1 text-second">
+    <div class="row rounded-5  summary-card justify-content-center align-items-center text-center p-5 ">
+        <div class="col-6 col-md-3 col-lg-3 mb-4 text-second">
+            <i class="bi bi-people fs-1 text-second"></i>
+            <h4 class="fw-bold text-second">{{site_settings.students_count}}</h4>
+            <span class="text-second">دانشجوی فعال</span>
+        </div>
+        <div class="col-6 col-md-3 col-lg-3 mb-4 text-second">
+            <i class="bi bi-bookmark fs-1 text-second"></i>
+            <h4 class="fw-bold">{{site_settings.courses_count}}</h4>
+            <span class="text-second">دوره‌ی آنلاین</span>
+        </div>
+        <div class="col-6 col-md-3 col-lg-3 mb-4 text-second">
+            <i class="bi bi-clock fs-1 text-second"></i>
+            <h4 class="fw-bold">{{site_settings.hours_count}}</h4>
+            <span class="text-second">ساعت آموزش</span>
+        </div>
+        <div class="col-6 col-md-3 col-lg-3 mb-4 text-second">
+            <i class="bi bi-archive fs-1 text-second"></i>
+            <h4 class="fw-bold text-second">{{site_settings.blog_count}}</h4>
+            <span class="text-second">مقاله رایگان</span>
+        </div>
+    </div>
+    
+</div>
+<!-- End summeries section -->
+
+
+
+
+<!-- 🌟 دوره‌های پیشنهادی (اسلايدر) -->
+  <div class="container mt-5 ">
+    <div class="card rounded-4 p-4 border-0">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-bold text-muted">دوره‌های پیشنهادی</h5>
+        <a href="{% url 'course:courses' %}" class="btn btn-sm btn-outline-second d-flex align-items-center">
+          <span class="fw-bold text-muted">همه</span>
+          <i class="bi bi-arrow-left ms-2 text-muted"></i>
+        </a>
+      </div>
+
+      <div class="swiper-container mySwiper  overflow-hidden" style="min-height: 380px;">
+        <div class="swiper-wrapper">
+
+          {% for c in featured_courses %}
+          <div class="swiper-slide p-2" style="width: fit-content;">
+            <div class="card rounded-4  border-0 bg-primary text-white" style="width: fit-content;">
+              <img src="{{ c.thumbnail.url }}" class="card-img-top rounded-top-4" alt="{{c.title}}" style="height: fit-content;width: fit-content; ">
+              <div class="card-body text-center">
+                <h6 class="fw-bold">{{c.title}}</h6>
+                <p class="small mb-1">{{c.short_description|safe|truncatewords:10}}</p>
+                <hr>
+                <span class="fw-bold">{% if c.is_free%}<a href="{% url 'course:course_detail' slug=c.slug %}" class="text-white text-decoration-none">رایگان</a>{% else %}<a href="{% url 'course:course_detail' slug=c.slug %}" class="text-white text-decoration-none">{{c.price|persian_price_format}}</a>{% endif %}</span>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+
+
+
+         
+          
+          
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+      </div>
+    </div>
+  </div>
+
+{% if site_settings.landing_title %}
+  <div class="container mt-5 mb-5">
+    <div class="card rounded-5 bg-primary p-4" style="height: fit-content;">
+      <h3 class="text-center text-white">{{site_settings.landing_title}}</h3>
+      <hr style="background-color: white;color:white">
+      <p class="text-white" style="color: white !important;">{{site_settings.landing_content|safe}}</p>
+    </div>
+  </div>
+<br>
+<br>
+<br>
+
+{% endif %}
+
+<!-- Features section -->
+<div class="container mt-5">
+
+  <h5 class="fw-bold text-center text-muted">امکانات ما</h5>
+
+
+  <div class="d-flex justify-content-between gap-3 mt-3 flex-wrap">
+    <div class="flex-fill bg-primary rounded-4 p-4 text-center text-white">
+        <i class="bi bi-stars fs-2 text-second"></i>
+      <h6 class="fw-bold text-second">آموزش آنلاین </h6>
+    </div>
+    <div class="flex-fill bg-primary rounded-4 p-4 text-center text-white">
+        <i class="bi bi-translate fs-2 text-second"></i>
+      <h6 class="fw-bold text-second">مترجم هوشمند</h6>
+    </div>
+    <div class="flex-fill bg-primary rounded-4 p-4 text-center text-white">
+        <i class="bi bi-chat-text fs-2 text-second"></i>
+      <h6 class="fw-bold text-second">پشتیبان هوش مصنوعی</h6>
+    </div>
+    
+  </div>
+
+  
+
+</div>
+<!-- End featurer section -->
+
+
+<!-- Partner section -->
+<div class="container mt-5">
+  <h5 class="fw-bold text-center text-muted">همراهان ما</h5>
+
+  <!-- Swiper Container -->
+<div class="swiper logo-swiper mt-3">
+    <div class="swiper-wrapper align-items-center">
+      <!-- اسلایدهای تصاویر همراهان -->
+
+      {% for p in partners %}
+      <div class="swiper-slide">
+        <img src="{{p.logo.url}}" alt="آکادمی عبری" class="img-fluid" style="max-height: 80px; width: auto;">
+      </div>
+      {% endfor %}
+    
+      <!-- اضافه کردن تصاویر بیشتر به همین شکل -->
+    </div>
+  </div>
+</div>
+
+<br>
+
+<!-- Partner section -->
+<div class="container mt-5">
+  <h5 class="fw-bold text-center text-muted">منابع و مراجع</h5>
+
+  <!-- Swiper Container -->
+<div class="swiper logo-swiper mt-3">
+    <div class="swiper-wrapper align-items-center">
+      <!-- اسلایدهای تصاویر همراهان -->
+
+      {% for s in sources %}
+      <div class="swiper-slide">
+        <img src="{{s.image.url}}" alt="آکادمی عبری" class="img-fluid" style="max-height: 80px; width: auto;">
+      </div>
+      {% endfor %}
+    
+      <!-- اضافه کردن تصاویر بیشتر به همین شکل -->
+    </div>
+  </div>
+</div>
+
+
+<!-- Latest blog section -->
+<div class="container mt-5">
+  <div class="card rounded-4 p-4 border-1">
+   <div class="d-flex justify-content-between align-items-center ">
+      <h5 class="text-muted fw-bold mb-0">آخرین مقالات</h5>
+      <a href="{% url 'blog:blog' %}" class="btn btn-sm btn-outline-second d-flex align-items-center">
+       <h5 class="text-muted fw-bold mb-0">همه </h5>
+        <i class="bi bi-arrow-left ms-2 text-muted"></i>
+      </a>
+    </div>
+
+    <!-- Swiper container - اضافه کردن overflow-hidden برای جلوگیری از مشکلات layout -->
+    <div class="swiper-container mySwiper mt-2 overflow-hidden">
+      <div class="swiper-wrapper">
+        <!-- Slides - هر اسلاید حاوی یک کارت کامل -->
+
+      {% for f in featured_posts %}
+        <div class="swiper-slide p-2"> <!-- اضافه کردن padding به اسلایدها -->
+          <div class="card rounded-4 h-90 border-0 bg-primary text-second" style="width: fit-content;">
+            <a href="{% url 'blog:blog_detail' slug=f.slug %}" class="text-decoration-none text-white">
+            <img src="{% if f.featured_image %}{{f.featured_image.url }}{% endif %}" class="card-img-top rounded-top-4" alt="Course Image">
+            <div class="card-body text-center">
+              <h6 class="fw-bold text-second mt-1">{{f.title}}</h6>
+              <p class="text-white small">{{f.excerpt|safe|truncatewords:10}}</p>
+            </div>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+
+       
+
+
+
+
+    
+       
+      
+        
+
+        <!-- اسلایدهای بیشتر... -->
+      </div>
+      
+      <!-- اضافه کردن navigation و pagination اختیاری -->
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+  </div>
+</div>
+
+
+
+
+</main>
+
+
+{% endblock main %}
+
+

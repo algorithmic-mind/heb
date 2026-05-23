@@ -1,0 +1,220 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.rtl.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/custom-swipper.css' %}" />
+    <link rel="shortcut icon" href="{{site_settings.site_favicon.url}}" type="image/x-icon">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "{{ site_settings.site_name }}",
+        "url": "{{ request.scheme }}://{{ request.get_host }}/",
+        "description": "{{ site_settings.site_description }}"
+    }
+    </script>
+    {% block seo %}
+
+    {% endblock seo %}
+</head>
+<body>
+
+
+    <header class="container mt-3 sticky-top">
+  <!-- ✅ هدر موبایل -->
+  <div class="d-flex d-md-none justify-content-between align-items-center px-3 py-2 " style="background-color: #143770; border-radius: 1rem; z-index: 1020;">
+    <!-- دکمه منو -->
+    <button class="btn text-white fs-3 " type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
+      <i class="bi bi-list"></i>
+    </button>
+
+   <h1 class="h6 text-white mb-0 text-center flex-grow-1 fw-bold" >
+    <span id="typed-text"></span>
+</h1>
+
+    <!-- فضای خالی برای حفظ تراز وسط -->
+    <div style="width: 40px;"></div>
+  </div>
+
+  <!-- ✅ هدر دسکتاپ -->
+  <div class="d-none d-md-flex justify-content-between align-items-center navbar-custom">
+    <!-- آواتار -->
+    <div class="d-flex align-items-center gap-3">
+      <a href="/"><img src="{{ site_settings.site_logo.url }}" alt="{{ site_settings.site_name }}" class="avatar" /></a>
+      <small class="text-second"><b>{{ site_settings.site_name }}</b></small>
+
+</div>
+
+    <!-- منو اصلی -->
+    <div class="d-flex flex-wrap justify-content-center mx-auto">
+      <a href="/" class="menu-button text-decoration-none text-black"><i class="bi bi-house"></i> صفحه اصلی</a>
+      <a href="{% url 'course:courses' %}" class="menu-button text-decoration-none text-black"><i class="bi bi-journals"></i> دوره‌های آموزشی</button>
+      <a href="{% url 'main:about' %}" class="menu-button text-decoration-none text-black"><i class="bi bi-question-circle"></i> درباره ما</a>
+      <a href="{% url 'main:contact' %}" class="menu-button text-decoration-none text-black"><i class="bi bi-telephone"></i> تماس با ما</a>
+      <a href="{% url 'main:project' %}" class="menu-button text-decoration-none text-black"><i class="bi bi-journal-text"></i> سفارش پروژه</a>
+      <button class="menu-button"><i class="bi bi-translate"></i> مترجم هوشمند</button>
+      <a href="{% url 'account:dashboard' %}" class="menu-button text-decoration-none text-black"><i class="bi bi-person"></i>حساب کاربری</a>
+    </div>
+  </div>
+
+  
+
+  <!-- ✅ offcanvas موبایل -->
+  <div class="offcanvas offcanvas-start text-bg-light" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title text-white" id="mobileMenuLabel">منو</h5>
+      <button type="button" class="btn-close " data-bs-dismiss="offcanvas" aria-label="بستن"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="d-flex flex-column gap-2">
+        <a href="{% url 'account:dashboard' %}" class="menu-button w-100 p-3 text-decoration-none text-black"><i class="bi bi-person"></i> حساب کاربری</a>
+        <a href="/" class="menu-button w-100 p-3 text-decoration-none text-black"><i class="bi bi-house"></i> صفحه اصلی</a>
+        <a href="{% url 'course:courses' %}" class="menu-button w-100 p-3 text-decoration-none text-black"><i class="bi bi-journals"></i> دوره‌های آموزشی</a>
+        <a href="{% url 'main:about' %}" class="menu-button w-100 p-3 text-decoration-none text-black"><i class="bi bi-question-circle"></i> درباره ما</a>
+        <a href="{% url 'main:contact' %}" class="menu-button w-100 p-3 text-decoration-none text-black"><i class="bi bi-telephone"></i> تماس با ما</a>
+        <a class="menu-button w-100 p-3 text-decoration-none text-black"><i class="bi bi-person-lines-fill"></i> همکاری با ما</a>
+        <a href="{% url 'main:project' %}" class="menu-button w-100 p-3 text-decoration-none text-black"><i class="bi bi-journal-text"></i> سفارش پروژه</a>
+        <a class="menu-button w-100 p-3 text-decoration-none text-black"><i class="bi bi-translate"></i> مترجم هوشمند</a>
+
+
+         {% for page in pages %}
+           <a href="{% url 'page:page' page.slug %}" class="menu-button w-100 p-3 text-decoration-none text-black">{{page.title}} </a>
+          {% endfor %}
+         
+      </div>
+    </div>
+  </div>
+
+</header>
+
+
+{% block main %}
+{% endblock main %}
+
+  <!-- Footer -->
+<footer class="container footer mt-5">
+  <div class="container py-4 px-3 rounded-4 bg-primary text-white">
+    <div class="row text-center text-md-start align-items-center">
+      
+      <!-- ستون درباره -->
+      <div class="col-md-3 mt-4">
+        <h6 class="fw-bold mb-2">درباره {{site_settings.site_name}} </h6>
+        <p class="mb-0 small">
+         {{site_settings.footer_text|safe}}
+        </p>
+      </div>
+
+      <!-- ستون لینک‌ها ۱ -->
+      <div class="col-md-3 mt-4">
+        <ul class="list-unstyled small text-center">
+          <li><a href="/" class="text-white text-decoration-none">صفحه اصلی</a></li>
+          <li><a href="{% url 'blog:blog' %}" class="text-white text-decoration-none">وبلاگ و مقالات</a></li>
+          <li><a href="{% url 'course:courses' %}" class="text-white text-decoration-none">دوره های آنلاین</a></li>
+         
+        </ul>
+      </div>
+
+      <!-- ستون لینک‌ها ۲ -->
+      <div class="col-md-3">
+        <ul class="list-unstyled small text-center mt-4">
+          {% for page in pages %}
+           <li><a href="{% url 'page:page' page.slug %}" class="text-white text-decoration-none">{{page.title}} </a></li>
+          {% endfor %}
+         
+         
+        </ul>
+      </div>
+
+      <!-- ستون لوگوها -->
+      <div class="col-md-3 text-center mt-4">
+      <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=642775&Code=Kg946QcYJ4TxtBenlR05OBtiHUMjgkyN'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=642775&Code=Kg946QcYJ4TxtBenlR05OBtiHUMjgkyN' alt='' style='cursor:pointer' code='Kg946QcYJ4TxtBenlR05OBtiHUMjgkyN'></a>  
+      </div>
+
+    </div>
+
+    <!-- دکمه‌های گرد -->
+    <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
+      
+      <a href="{% url 'main:contact' %}" class="btn btn-sm btn-light rounded-pill p-2">تماس با آکادمی</a>
+      <a href="{% url 'main:about' %}" class="btn btn-sm btn-light rounded-pill p-2"> درباره ما </a>
+      <a href="{% url 'main:project' %}" class="btn btn-sm btn-light rounded-pill p-2">سفارش پروژه </a>
+      
+    </div>
+
+    <!-- شبکه‌های اجتماعی -->
+    <div class="d-flex justify-content-center gap-3 mt-4 fs-4">
+      <a href="https://web.eitaa.com/#@hebrew_academy" class="text-white"><img src="{% static 'images/eita.png' %}" alt="" width="32"></a>
+      <a href="http://youtube.com/@hebrew_academy" class="text-white"><img src="{% static 'images/youtube.webp' %}" alt="" width="36"></a>
+     
+    </div>
+  </div>
+
+  <!-- کپی‌رایت -->
+  <div class="bg-light py-2 text-center small mt-2 rounded-pill">
+    تمامی حقوق این سایت متعلق به آکادمی عبری می‌باشد.
+  </div>
+</footer>
+
+
+
+<script src="{% static 'js/htmx2.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new Typed("#typed-text", {
+      strings: [
+        "آکادمی زبان عبری ایران",
+        "האקדמיה לשפה העברית האיראנית ",
+        "آکادمی زبان عبری ایران",
+      ],
+      typeSpeed: 50,
+      backSpeed: 30,
+      backDelay: 2000,
+      loop: true,
+      showCursor: false,
+     
+    });
+
+    new Typed("#typed-text2", {
+      strings: [
+     {% for s in site_settings.get_special_texts %}
+     "{{s}}",
+     {% endfor %}
+
+
+    
+      ],
+      typeSpeed: 50,
+      backSpeed: 10,
+      backDelay: 2000,
+      loop: true,
+      showCursor: false,
+     
+    });
+
+
+  });
+</script>
+
+
+<script src="{% static 'js/typed-js.js' %}"></script>
+<script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+
+
+<script src="{% static 'js/custom-swipper.js' %}"></script>
+
+<script type="text/javascript">
+  !function(){var i="n9iMah",a=window,d=document;function g(){var g=d.createElement("script"),s="https://www.goftino.com/widget/"+i,l=localStorage.getItem("goftino_"+i);g.async=!0,g.src=l?s+"?o="+l:s;d.getElementsByTagName("head")[0].appendChild(g);}"complete"===d.readyState?g():a.attachEvent?a.attachEvent("onload",g):a.addEventListener("load",g,!1);}();
+</script>
+
+</body>
+</html>

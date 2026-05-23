@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{site_settings.site_name}} - وبلاگ {% endblock title %}
+
+{% block seo %}
+<meta name="title" content="{{site_settings.meta_title}} | وبلاگ و مقالات آکادمی عبری  ">
+<meta name="description" content="{{site_settings.meta_description}} | وبلاگ و مقالات آکادمی عبری ">
+<meta name="keywords" content="{{site_settings.meta_keywords}}, آکادمی عبری ایران, آکادمی عبری, آموزش عبری">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="language" content="Persian">
+<meta name="revisit-after" content="7 days">
+{% endblock seo %}
+
+
+
+{% block main %}
+
+<main class="container mt-2 mb-5">
+
+  <!-- 🔍 جستجو و فیلتر -->
+  <div class="card rounded-4 p-3 mb-4 border-0 shadow-sm">
+    <div class="row g-2">
+      <div class="col-12 col-md-6">
+        <input type="text" class="form-control rounded-3" placeholder="جستجو در مقالات..." />
+      </div>
+      <div class="col-12 col-md-6">
+        <select class="form-select rounded-3">
+          <option>همه دسته‌بندی‌ها</option>
+          <option>آموزش عبری</option>
+          <option>فرهنگ و تمدن</option>
+          <option>توصیه‌های یادگیری</option>
+          <option>اخبار آکادمی</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🏷️ دسته‌بندی‌ها -->
+  <div class="container mb-4">
+    <h6 class="fw-bold text-muted mb-3">دسته‌بندی‌ها</h6>
+    <div class="d-flex gap-2 overflow-auto pb-2">
+      <button class="btn btn-sm btn-primary rounded-pill px-4">همه مقالات</button>
+      <button class="btn btn-sm btn-outline-primary rounded-pill px-4">آموزش عبری</button>
+      <button class="btn btn-sm btn-outline-primary rounded-pill px-4">فرهنگ اسرائیل</button>
+      <button class="btn btn-sm btn-outline-primary rounded-pill px-4">تکنیک‌های یادگیری</button>
+      <button class="btn btn-sm btn-outline-primary rounded-pill px-4">اخبار آکادمی</button>
+    </div>
+  </div>
+
+ 
+
+  <!-- 📚 لیست مقالات -->
+   <div class="container">
+  <div class="container row g-4">
+
+    {% for b in blogs %}
+    <!-- مقاله ۱ -->
+    <div class="col-12 col-md-6 col-lg-4">
+      <a href="{% url 'blog:blog_detail' slug=b.slug %}" class="text-decoration-none" target="_blank">
+        <div class="card blog-card shadow-sm">
+          <img src="{% if b.featured_image%}{{b.featured_image.url}}{%endif%}" class="card-img-top" alt="مقاله ۱">
+          <span class="badge bg-primary category-badge">{{b.categories.first}}</span>
+          <div class="card-body">
+            <h6 class="fw-bold text-primary">{{b.title}}</h6>
+            <p class="text-muted small">{{b.excerpt|safe|truncatewords:10}}</p>
+            <div class="read-time">زمان مطالعه: ۵ دقیقه</div>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+
+  
+
+  
+  </div>
+</div>
+  <!-- 📝 اگر مقاله‌ای نبود -->
+  <!--
+  <div class="text-center mt-5 text-muted">
+    <p>مقاله‌ای با این معیارها یافت نشد.</p>
+  </div>
+  -->
+
+  <!-- 📣 اطلاعیه (اختیاری) -->
+  <div class="container mt-5">
+    <div class="alert alert-light border rounded-4 text-center p-4">
+      <h6 class="fw-bold">نویسنده هستید؟</h6>
+      <p class="small mb-0">در وبلاگ آکادمی عبری مقاله بنویسید و به جامعه یادگیرندگان کمک کنید. <a href="#" class="text-primary">همکاری با ما</a></p>
+    </div>
+  </div>
+
+</main>
+
+{% endblock main %}
+

@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ورود به آکادمی عبری ایران</title>
+  <link rel="stylesheet" href="{% static '/css/bootstrap.rtl.min.css' %}">
+  <link rel="stylesheet" href="{% static '/css/styles.css' %}">
+  <link rel="stylesheet" href="{% static '/css/bootstrap-icons.css' %}">
+   
+</head>
+<body>
+
+    {% block main %}
+  
+    {% endblock main %}
+
+<script src="{% static '/js/htmx-2-0-6.min.js' %}"></script>
+  <script>
+    htmx.config.selfRequestsOnly = false
+  </script>
+</body>
+</html>

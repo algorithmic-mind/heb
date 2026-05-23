@@ -1,0 +1,59 @@
+/* تنظیمات پایه برای Swiper */
+.swiper-container {
+    width: 100%;
+    padding: 10px 0 30px;
+    /* فضای کافی برای pagination */
+}
+
+.swiper-slide {
+    height: auto;
+    /* ارتفاع خودکار برای تطابق با محتوا */
+}
+
+/* رفع مشکل زوم شدن */
+.swiper {
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* استایل‌دهی navigation */
+.swiper-button-next,
+.swiper-button-prev {
+    color: #0d6efd;
+    background: rgba(255, 255, 255, 0.8);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+    font-size: 1.2rem;
+}
+
+
+.logo-swiper {
+    padding: 20px 0;
+}
+
+.logo-swiper .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    
+}
+
+
+.logo-swiper .swiper-slide img {
+    
+    transition: filter 0.3s;
+}
+
+.logo-swiper .swiper-slide:hover img {
+    filter: grayscale(80%);
+}

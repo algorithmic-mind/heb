@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{site_settings.site_name}} - وبلاگ {% endblock title %}
+
+{% block seo %}
+
+
+{% endblock seo %}
+
+
+
+{% block main %}
+
+<main class="container mt-5 mb-5">
+
+  <!-- 🏁 عنوان صفحه -->
+  <div class="text-center mb-5">
+    <h2 class="fw-bold text-primary">سفارش پروژه تخصصی عبری</h2>
+    <p class="text-muted">
+      فرم زیر را پر کنید تا تیم متخصص ما در کمتر از ۲۴ ساعت با شما تماس بگیرد.
+    </p>
+  </div>
+
+  <!-- 📝 فرم سفارش -->
+  <div class="order-form">
+    <form id="projectForm">
+
+      <!-- نوع پروژه -->
+      <div class="mb-4">
+        <label class="form-label">نوع پروژه</label>
+        <div class="row g-3">
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="service-card" onclick="selectService(this, 'translate')">
+              <i class="bi bi-translate fs-2 text-primary mb-2"></i>
+              <h6>ترجمه متون</h6>
+              <p class="small text-muted">از فارسی به عبری و بالعکس</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="service-card" onclick="selectService(this, 'teach')">
+              <i class="bi bi-person-video3 fs-2 text-primary mb-2"></i>
+              <h6>تدریس خصوصی</h6>
+              <p class="small text-muted">جلسات آنلاین با مربی حرفه‌ای</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="service-card" onclick="selectService(this, 'proofread')">
+              <i class="bi bi-pen fs-2 text-primary mb-2"></i>
+              <h6>تصحیح و ویرایش</h6>
+              <p class="small text-muted">بررسی گرامر و ساختار متن</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="service-card" onclick="selectService(this, 'research')">
+              <i class="bi bi-journal-bookmark fs-2 text-primary mb-2"></i>
+              <h6>تحقیق و ترجمه آکادمیک</h6>
+              <p class="small text-muted">برای پایان‌نامه و مقالات علمی</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="service-card" onclick="selectService(this, 'voiceover')">
+              <i class="bi bi-mic fs-2 text-primary mb-2"></i>
+              <h6>دوبله و گفتار</h6>
+              <p class="small text-muted">ضبط صدا و دوبله به عبری</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="service-card" onclick="selectService(this, 'other')">
+              <i class="bi bi-lightbulb fs-2 text-primary mb-2"></i>
+              <h6>سایر خدمات</h6>
+              <p class="small text-muted">درخواست خاص خود را بنویسید</p>
+            </div>
+          </div>
+        </div>
+        <input type="hidden" id="serviceType" name="service" required>
+      </div>
+
+      <!-- جزئیات پروژه -->
+      <div class="mb-4">
+        <label for="details" class="form-label">توضیحات پروژه</label>
+        <textarea class="form-control rounded-3" id="details" name="details" rows="5" placeholder="لطفاً جزئیات پروژه خود را بنویسید..." required></textarea>
+      </div>
+
+      <!-- آپلود فایل -->
+      <div class="mb-4">
+        <label class="form-label">آپلود فایل (اختیاری)</label>
+        <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+          <i class="bi bi-cloud-arrow-up text-primary fs-1"></i>
+          <p class="mt-2 mb-0">فایل خود را اینجا بکشید یا کلیک کنید</p>
+          <small class="text-muted">پشتیبانی از PDF، Word، TXT، تصویر</small>
+          <input type="file" id="fileInput" class="d-none" onchange="updateFileName(this)">
+        </div>
+        <div id="fileName" class="mt-2 text-muted small"></div>
+      </div>
+
+      <!-- اطلاعات تماس -->
+      <div class="row g-3 mb-4">
+        <div class="col-12 col-md-6">
+          <label for="name" class="form-label">نام و نام خانوادگی</label>
+          <input type="text" class="form-control rounded-3" id="name" name="name" required>
+        </div>
+        <div class="col-12 col-md-6">
+          <label for="phone" class="form-label">شماره تماس</label>
+          <input type="tel" class="form-control rounded-3" id="phone" name="phone" required>
+        </div>
+        <div class="col-12 col-md-6">
+          <label for="email" class="form-label">ایمیل</label>
+          <input type="email" class="form-control rounded-3" id="email" name="email" required>
+        </div>
+        <div class="col-12 col-md-6">
+          <label for="deadline" class="form-label">مهلت تحویل</label>
+          <input type="date" class="form-control rounded-3" id="deadline" name="deadline">
+        </div>
+      </div>
+
+      <!-- تخمین هزینه -->
+      <div class="price-estimate mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h6 class="mb-0">تخمین هزینه</h6>
+            <small class="text-muted">پس از بررسی دقیق، هزینه نهایی اعلام می‌شود</small>
+          </div>
+          <div class="text-end">
+            <strong id="estimatedPrice">تماس بگیرید</strong><br>
+            <small id="estimatedTime" class="text-muted">تحویل: ۲۴ تا ۴۸ ساعت</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- دکمه ارسال -->
+      <div class="text-end">
+        <button type="submit" class="btn btn-primary btn-lg px-5 rounded-3">
+          ارسال درخواست
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  
+
+</main>
+
+
+
+<script>
+  // انتخاب نوع خدمات
+  function selectService(element, type) {
+    document.querySelectorAll('.service-card').forEach(card => {
+      card.classList.remove('selected');
+    });
+    element.classList.add('selected');
+    document.getElementById('serviceType').value = type;
+
+    // به‌روزرسانی تخمین
+    updateEstimate(type);
+  }
+
+  // به‌روزرسانی نام فایل
+  function updateFileName(input) {
+    const fileName = input.files[0] ? input.files[0].name : '';
+    document.getElementById('fileName').textContent = 'فایل انتخاب شده: ' + fileName;
+  }
+
+  // تخمین هزینه و زمان
+  function updateEstimate(type) {
+    const priceEl = document.getElementById('estimatedPrice');
+    const timeEl = document.getElementById('estimatedTime');
+
+    switch(type) {
+      case 'translate':
+        priceEl.textContent = 'از ۵۰,۰۰۰ تومان';
+        timeEl.textContent = 'تحویل: ۲۴ تا ۴۸ ساعت';
+        break;
+      case 'teach':
+        priceEl.textContent = 'از ۳۰۰,۰۰۰ تومان/جلسه';
+        timeEl.textContent = 'شروع: فوری';
+        break;
+      case 'proofread':
+        priceEl.textContent = 'از ۷۰,۰۰۰ تومان';
+        timeEl.textContent = 'تحویل: ۲۴ ساعت';
+        break;
+      case 'research':
+        priceEl.textContent = 'تماس بگیرید';
+        timeEl.textContent = 'تحویل: ۳ تا ۷ روز';
+        break;
+      case 'voiceover':
+        priceEl.textContent = 'از ۱۵۰,۰۰۰ تومان';
+        timeEl.textContent = 'تحویل: ۴۸ ساعت';
+        break;
+      default:
+        priceEl.textContent = 'تماس بگیرید';
+        timeEl.textContent = 'تحویل: ۲۴ تا ۴۸ ساعت';
+    }
+  }
+
+  // ارسال فرم
+  document.getElementById('projectForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (!document.getElementById('serviceType').value) {
+      alert('لطفاً نوع پروژه را انتخاب کنید.');
+      return;
+    }
+    alert('درخواست شما با موفقیت ارسال شد. تیم پشتیبانی در کمتر از ۲۴ ساعت با شما تماس خواهند گرفت.');
+    this.reset();
+    document.querySelectorAll('.service-card').forEach(card => card.classList.remove('selected'));
+    document.getElementById('fileName').textContent = '';
+  });
+
+  // تایپد برای هدر
+  document.addEventListener("DOMContentLoaded", function () {
+    new Typed("#typed-text", {
+      strings: [
+        "آکادمی زبان عبری ایران",
+        "האקדמיה לשפה העברית האיראנית ",
+        "آکادمی زبان عبری ایران",
+      ],
+      typeSpeed: 50,
+      backSpeed: 30,
+      backDelay: 2000,
+      loop: true,
+      showCursor: false,
+    });
+
+    new Typed("#typed-text2", {
+      strings: [
+        "سفارش پروژه",
+        "הזמנת פרוייקט",
+        "سفارش پروژه",
+      ],
+      typeSpeed: 50,
+      backSpeed: 10,
+      backDelay: 2000,
+      loop: true,
+      showCursor: false,
+    });
+  });
+</script>
+{% endblock main %}

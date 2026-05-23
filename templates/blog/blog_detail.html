@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load jalali_tags %}
+
+
+{% block title %}{{post.title}}{% endblock title %}
+
+{% block seo %}
+<meta name="title" content="{{post.meta_title}}">
+<meta name="description" content="{{post.meta_description|safe}}">
+<meta name="keywords" content="{{post.meta_keywords}}">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="language" content="Persian">
+<meta name="revisit-after" content="7 days">
+{% endblock seo %}
+
+
+
+{% block main %}
+
+<main class="container mt-2 mb-5">
+
+  <!-- 🖼️ تصویر برجسته -->
+  <div class="featured-image">
+     <img src="{% if post.featured_image %}{{post.featured_image.url}}{% endif %}" alt="" class="rounded-4 img-fluid">
+  </div>
+
+  <!-- عنوان مقاله -->
+  <h2 class="fw-bold text-primary">{{post.title}}</h2>
+
+  <!-- اطلاعات مقاله -->
+  <div class="article-meta d-flex flex-wrap justify-content-between align-items-center mb-4 p-3">
+    <div class="d-flex align-items-center gap-3">
+      <img src="{{post.author.profile.avatar.url}}" alt="نویسنده" class="avatar">
+      <div>
+        <div class="fw-bold text-primary">{{post.author.first_name}} {{post.author.last_name}}</div>
+        <div class="text-muted small">{{post.author.profile.bio}}</div>
+      </div>
+    </div>
+    <div class="text-center">
+      <div><i class="bi bi-calendar"></i> {{ post.created_at|jalali_date }} </div>
+      <div class="text-muted small"><i class="bi bi-clock"></i> زمان مطالعه: ۵ دقیقه</div>
+    </div>
+  </div>
+
+  <!-- دکمه اشتراک‌گذاری -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <span class="text-muted small">اشتراک‌گذاری:</span>
+    <div class="share-buttons">
+      <a href="#"><i class="bi bi-telegram"></i></a>
+      <a href="#"><i class="bi bi-whatsapp"></i></a>
+      <a href="#"><i class="bi bi-linkedin"></i></a>
+      <a href="#"><i class="bi bi-instagram"></i></a>
+    </div>
+  </div>
+
+  <!-- متن مقاله -->
+  <div class="article-content text-primary">
+    {{post.content|safe}}
+
+    <p class="text-center mt-5 p-4 bg-light rounded-4">
+      <strong>نکته مهم:</strong> ناامید نشوید! یادگیری عبری مثل یک سفر است. اولین قدم، حفظ الفبا است و ما کنار شما هستیم.
+    </p>
+  </div>
+
+  <!-- بخش نظرات -->
+  <div class="card rounded-4 p-4 mt-5 border-0 shadow-sm">
+    <h5 class="fw-bold text-muted mb-4">نظرات دانشجویان</h5>
+    {% for c in comments %}
+    <!-- نظر ۱ -->
+    <div class="comment d-flex gap-3">
+      <img src="{% static 'images/tl.webp' %}" alt="کاربر" class="avatar">
+      <div>
+        <h6 class="mb-0 fw-bold text-primary">{{c.name}}</h6>
+        <small class="text-muted">{{c.created_at|jalali_date}}</small>
+        <p class="mt-1 mb-0">{{c.content}}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- 🌟 مقالات مشابه -->
+  <div class="container mt-5">
+    <div class="card rounded-4 p-4 border-0">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-bold text-muted">مقالات مشابه</h5>
+       
+      </div>
+
+      <div class="swiper-container mySwiper overflow-hidden" style="min-height: 300px;">
+        <div class="swiper-wrapper">
+
+          {% for r in related_posts %}
+          <div class="swiper-slide p-2">
+            <div class="card rounded-4 h-100 border-0 bg-primary text-white">
+              <img src="{% if r.featured_image %}{{r.featured_image.url}}{% endif%}" class="card-img-top" alt="مقاله" style="height: 140px; object-fit: cover;">
+              <div class="card-body">
+                <h6 class="fw-bold">{{f.title}}</h6>
+                <p class="small text-white-50">{{f.excerpt|truncatewords:10}}</p>
+                <div class="text-white-50 small"><i class="bi bi-clock"></i> ۷ دقیقه</div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+         
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+{% endblock main %}
